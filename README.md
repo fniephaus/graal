@@ -8,7 +8,7 @@ The project website at [https://www.graalvm.org/](https://www.graalvm.org/) desc
 
 ## Documentation
 
-Please refer to the official [GraalVM documentation on the GraalVM website](https://www.graalvm.org/docs/introduction/). You can find most of the documentation sources in the [`docs/`](docs/) directory in the same hierarchy as displayed on the website. Additional documentation sources for individual components can be found in corresponding `docs/` sub-directories. The documentation for the Truffle framework, for example, can be found in [`truffle/docs/`](truffle/docs). This also applies to languages, tools, and other components maintained in [related repositories](#related-repositories).
+Please refer to the [GraalVM website for documentation](https://www.graalvm.org/docs/introduction/). You can find most of the documentation sources in the [`docs/`](docs/) directory in the same hierarchy as displayed on the website. Additional documentation sources for individual components can be found in corresponding `docs/` sub-directories. The documentation for the Truffle framework, for example, can be found in [`truffle/docs/`](truffle/docs). This also applies to languages, tools, and other components maintained in [related repositories](#related-repositories).
 
 ## Repository Structure
 
