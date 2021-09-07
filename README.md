@@ -1,6 +1,6 @@
 # [![GraalVM](.github/assets/logo_320x64.svg)](https://www.graalvm.org/)
 
-[![https://graalvm.slack.com](https://img.shields.io/badge/slack-join%20channel-active)](https://www.graalvm.org/slack-invitation/)
+[![https://www.graalvm.org/downloads/](https://img.shields.io/badge/download-latest-blue)](https://www.graalvm.org/downloads/) [![https://graalvm.slack.com](https://img.shields.io/badge/docs-read-green)](https://www.graalvm.org/docs/introduction/) [![https://graalvm.slack.com](https://img.shields.io/badge/slack%20community-join-active)](https://www.graalvm.org/slack-invitation/) [![License](https://img.shields.io/badge/twitter-@graalvm-active)](https://twitter.com/graalvm) [![GraalVM Gate](https://github.com/oracle/graal/actions/workflows/main.yml/badge.svg)](https://github.com/oracle/graal/actions/workflows/main.yml) [![https://graalvm.slack.com](https://img.shields.io/badge/license-GPLv2+CE-green)](#license)
 
 GraalVM is a high-performance JDK distribution designed to accelerate the execution of applications written in Java and other JVM languages along with support for JavaScript, Ruby, Python, and a number of other popular languages.
 
@@ -34,6 +34,7 @@ Directory | Description
 ## Get Support
 
 * Open a [GitHub issue](https://github.com/oracle/graal/issues) for bug reports, questions, or requests for enhancements.
+* Join the [GraalVM Slack](https://www.graalvm.org/slack-invitation/) to connect with the community and the GraalVM team.
 * Report a security vulnerability according to the [Reporting Vulnerabilities guide](https://www.oracle.com/corporate/security-practices/assurance/vulnerability/reporting.html).
 
 ## Related Repositories
@@ -45,11 +46,12 @@ Name         | Description
 [FastR](https://github.com/oracle/fastr) | Implementation of the R language.
 [GraalJS](https://github.com/oracle/graaljs) | Implementation of JavaScript and Node.js.
 [GraalPython](https://github.com/oracle/graalpython) | Implementation of the Python language.
+[GraalVM Demos](https://github.com/graalvm/graalvm-demos) | Several small applications illustrating GraalVM capabilities.
 [Native Build Tools](https://github.com/graalvm/native-build-tools) | Build tool plugins for GraalVM Native Image.
-[SimpleLanguage](https://github.com/graalvm/simplelanguage) | A simple demonstration language for the GraalVM.
+[SimpleLanguage](https://github.com/graalvm/simplelanguage) | A simple example language built in the Truffle framework.
+[SimpleTool](https://github.com/graalvm/simpletool) | A simple example tool built in the Truffle framework.
 [TruffleRuby](https://github.com/oracle/truffleruby) | Implementation of the Ruby language.
 [VS Code Extensions](https://github.com/graalvm/vscode-extensions) | VS Code extensions for GraalVM.
-
 
 ## License
 
@@ -58,6 +60,6 @@ GraalVM Community Edition is open source and distributed under [version 2 of the
 Component(s) | License
 ------------ | -------------
 [Espresso](espresso/LICENSE) | GPL 2
-[GraalVM Compiler](compiler/LICENSE.md), [SubstrateVM](substratevm/LICENSE), [Tools](tools/LICENSE), [VM](vm/LICENSE_GRAALVM_CE) | GPL 2 with Classpath exception
+[GraalVM Compiler](compiler/LICENSE.md), [SubstrateVM](substratevm/LICENSE), [Tools](tools/LICENSE), [VM](vm/LICENSE_GRAALVM_CE) | GPL 2 with Classpath Exception
 [GraalVM SDK](sdk/LICENSE.md), [GraalWasm](wasm/LICENSE), [Truffle Framework](truffle/LICENSE.md), [TRegex](regex/LICENSE.md) | Universal Permissive License
 [Sulong](sulong/LICENSE) | 3-clause BSD
