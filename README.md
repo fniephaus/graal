@@ -1,4 +1,4 @@
-# [![GraalVM](.github/assets/logo_320x64.svg)][website]
+[![GraalVM](.github/assets/logo_320x64.svg)][website]
 
 [![https://www.graalvm.org/downloads/][badge-dl]][downloads] [![docs][badge-docs]][docs] [![https://graalvm.slack.com][badge-slack]][slack] [![Twitter][badge-twitter]][twitter] [![GraalVM YouTube Channel][badge-yt]][youtube]  [![GraalVM Gate][badge-gate]][gate] [![license][badge-license]](#license)
 
