@@ -1,6 +1,6 @@
 # [![GraalVM](.github/assets/logo_320x64.svg)][website]
 
-[![https://www.graalvm.org/downloads/][badge-dl]][downloads] [![docs][badge-docs]][docs] [![https://graalvm.slack.com][badge-slack]][slack] [![Twitter][badge-twitter]][twitter] [![GraalVM Gate][badge-gate]][gate] [![license][badge-license]](#license)
+[![https://www.graalvm.org/downloads/][badge-dl]][downloads] [![docs][badge-docs]][docs] [![https://graalvm.slack.com][badge-slack]][slack] [![Twitter][badge-twitter]][twitter] [![GraalVM YouTube Channel][badge-yt]][youtube]  [![GraalVM Gate][badge-gate]][gate] [![license][badge-license]](#license)
 
 GraalVM is a high-performance JDK distribution designed to accelerate the execution of applications written in Java and other JVM languages along with support for JavaScript, Ruby, Python, and a number of other popular languages.
 
@@ -8,34 +8,32 @@ The project website at [https://www.graalvm.org/][website] describes how to [get
 
 ## Documentation
 
-Please refer to the [GraalVM website for documentation][docs]. You can find most of the documentation sources in the [`docs/`](docs/) directory in the same hierarchy as displayed on the website. Additional documentation sources for individual components can be found in corresponding `docs/` sub-directories. The documentation for the Truffle framework, for example, can be found in [`truffle/docs/`](truffle/docs/). This also applies to languages, tools, and other components maintained in [related repositories](#related-repositories).
-
-## Repository Structure
-
-The GraalVM main source repository includes the components listed below. The documentation for each component includes
-developer instructions for the component.
-
-Directory | Description
------------- | -------------
-[`.github/`](.github/) | Configuration files for GitHub issues, workflows, … .
-[`compiler/`](compiler/) | [Graal compiler][reference-compiler], a modern, versatile compiler written in Java.
-[`espresso/`](espresso/) | [Espresso][java-on-truffle], a meta-circular Java bytecode interpreter for the GraalVM.
-[`examples/`](examples/) | Various examples.
-[`java-benchmarks/`](java-benchmark/) | Java benchmarks.
-[`regex/`](regex/) | TRegex, a regular expression engine for other GraalVM languages.
-[`sdk/`](sdk/) | [GraalVM SDK][graalvm-sdk], long-term supported APIs of GraalVM.
-[`substratevm/`](substratevm/) | Framework enabling ahead-of-time (AOT) compilation with [Native Image][native-image].
-[`sulong/`](sulong/) | [Sulong][reference-sulong], an engine for running LLVM bitcode on GraalVM.
-[`tools/`](tools/) | A set of tools for GraalVM languages implemented with the instrumentation framework.
-[`truffle/`](truffle/) | [Language implementation framework][truffle] for creating languages and instrumentations for GraalVM.
-[`vm/`](vm/) | The components to build a modular GraalVM image.
-[`wasm/`](wasm/) | [GraalWasm][reference-graalwasm], an engine for running WebAssembly programs on GraalVM.
+Please refer to the [GraalVM website for documentation][docs]. You can find most of the documentation sources in the [`docs/`](docs/) directory in the same hierarchy as displayed on the website. Additional documentation including developer instructions for individual components can be found in corresponding `docs/` sub-directories. The documentation for the Truffle framework, for example, is in [`truffle/docs/`](truffle/docs/). This also applies to languages, tools, and other components maintained in [related repositories](#related-repositories).
 
 ## Get Support
 
 * Open a [GitHub issue][issues] for bug reports, questions, or requests for enhancements.
 * Join the [GraalVM Slack][slack] to connect with the community and the GraalVM team.
 * Report a security vulnerability according to the [Reporting Vulnerabilities guide][reporting-vulnerabilities].
+
+## Repository Structure
+
+This source repository is the main repository for GraalVM and includes the following components:
+
+Directory | Description
+------------ | -------------
+[`.github/`](.github/) | Configuration files for GitHub issues, workflows, ….
+[`compiler/`](compiler/) | [Graal compiler][reference-compiler], a modern, versatile compiler written in Java.
+[`espresso/`](espresso/) | [Espresso][java-on-truffle], a meta-circular Java bytecode interpreter for the GraalVM.
+[`java-benchmarks/`](java-benchmark/) | Java benchmarks.
+[`regex/`](regex/) | TRegex, a regular expression engine for other GraalVM languages.
+[`sdk/`](sdk/) | [GraalVM SDK][graalvm-sdk], long-term supported APIs of GraalVM.
+[`substratevm/`](substratevm/) | Framework for ahead-of-time (AOT) compilation with [Native Image][native-image].
+[`sulong/`](sulong/) | [Sulong][reference-sulong], an engine for running LLVM bitcode on GraalVM.
+[`tools/`](tools/) | Tools for GraalVM languages implemented with the instrumentation framework.
+[`truffle/`](truffle/) | GraalVM's [language implementation framework][truffle] for creating languages and tools.
+[`vm/`](vm/) | Components for building GraalVM distributions.
+[`wasm/`](wasm/) | [GraalWasm][reference-graalwasm], an engine for running WebAssembly programs on GraalVM.
 
 ## Related Repositories
 
@@ -46,7 +44,7 @@ Name         | Description
 [FastR] | Implementation of the R language.
 [GraalJS] | Implementation of JavaScript and Node.js.
 [GraalPython] | Implementation of the Python language.
-[GraalVM Demos][graalvm-demos] | Several small applications illustrating GraalVM capabilities.
+[GraalVM Demos][graalvm-demos] | Several example applications illustrating GraalVM capabilities.
 [Native Build Tools][native-build-tools] | Build tool plugins for GraalVM Native Image.
 [SimpleLanguage] | A simple example language built in the Truffle framework.
 [SimpleTool] | A simple example tool built in the Truffle framework. 
@@ -65,6 +63,13 @@ Component(s) | License
 [Sulong](sulong/LICENSE) | 3-clause BSD
 
 
+[badge-dl]: https://img.shields.io/badge/download-latest-blue
+[badge-docs]: https://img.shields.io/badge/docs-read-green
+[badge-gate]: https://github.com/oracle/graal/actions/workflows/main.yml/badge.svg
+[badge-license]: https://img.shields.io/badge/license-GPLv2+CE-green
+[badge-slack]: https://img.shields.io/badge/Slack-join-active?logo=slack
+[badge-twitter]: https://img.shields.io/badge/Twitter-@graalvm-active?logo=twitter
+[badge-yt]: https://img.shields.io/badge/YouTube-subscribe-active?logo=youtube
 [community]: https://www.graalvm.org/community/
 [contributors]: https://www.graalvm.org/community/contributors/
 [docs]: https://www.graalvm.org/docs/introduction/
@@ -92,9 +97,4 @@ Component(s) | License
 [twitter]: https://twitter.com/graalvm
 [vscode-extensions]: https://github.com/graalvm/vscode-extensions
 [website]: https://www.graalvm.org/
-[badge-dl]: https://img.shields.io/badge/download-latest-blue
-[badge-docs]: https://img.shields.io/badge/docs-read-green
-[badge-slack]: https://img.shields.io/badge/slack%20community-join-active
-[badge-twitter]: https://img.shields.io/badge/twitter-@graalvm-active
-[badge-gate]: https://github.com/oracle/graal/actions/workflows/main.yml/badge.svg
-[badge-license]: https://img.shields.io/badge/license-GPLv2+CE-green
+[youtube]: https://www.youtube.com/graalvm
