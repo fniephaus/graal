@@ -50,8 +50,8 @@ class MemoryUtil {
      */
     private static final long MAX_HEAP_BYTES = 32_000_000_000L;
 
-    /* Use 80% of total system memory in case available memory cannot be determined. */
-    private static final double FALLBACK_TOTAL_MEMORY_RATIO = 0.8;
+    /* Use at most 80% of total system memory. */
+    private static final double MAX_ALLOWED_TOTAL_MEMORY_RATIO = 0.8;
 
     public static List<String> determineMemoryFlags() {
         return List.of(
@@ -81,20 +81,21 @@ class MemoryUtil {
     private static double determineReasonableMaxRAMPercentage() {
         var osBean = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
         long totalMemorySize = osBean.getTotalMemorySize();
+        long maxAllowedTotalMemorySize = (long) (totalMemorySize * MAX_ALLOWED_TOTAL_MEMORY_RATIO);
         long reasonableMaxMemorySize = -1;
         reasonableMaxMemorySize = switch (OS.getCurrent()) {
             case LINUX -> getAvailableMemorySizeLinux();
             case DARWIN -> getAvailableMemorySizeDarwin();
             case WINDOWS -> getAvailableMemorySizeWindows();
         };
-        if (reasonableMaxMemorySize < 0 || reasonableMaxMemorySize > totalMemorySize) {
+        if (reasonableMaxMemorySize < 0 || reasonableMaxMemorySize > maxAllowedTotalMemorySize) {
             /*
              * The amount of available memory was not at all or incorrectly detected. Fall back to a
              * value based on total memory. OperatingSystemMXBean.getTotalMemorySize() is
              * container-aware whereas, for example, /proc/meminfo is not and thus may report
              * available memory of the host which can exceed the memory limit of a container.
              */
-            reasonableMaxMemorySize = (long) (totalMemorySize * FALLBACK_TOTAL_MEMORY_RATIO);
+            reasonableMaxMemorySize = maxAllowedTotalMemorySize;
         }
         if (reasonableMaxMemorySize < MIN_HEAP_BYTES) {
             throw new NativeImageError(
