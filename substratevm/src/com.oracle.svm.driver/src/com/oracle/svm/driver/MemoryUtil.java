@@ -50,6 +50,9 @@ class MemoryUtil {
      */
     private static final long MAX_HEAP_BYTES = 32_000_000_000L;
 
+    /* Use at most an additional 20% of available memory. */
+    private static final double MAX_HEADROOM_RATIO = 0.2;
+
     /* Use at most 80% of total system memory. */
     private static final double MAX_ALLOWED_TOTAL_MEMORY_RATIO = 0.8;
 
@@ -108,7 +111,7 @@ class MemoryUtil {
     }
 
     /**
-     * Returns the total amount of available memory in bytes on Linux based on
+     * Returns the total amount of available memory plus headroom in bytes on Linux based on
      * <code>/proc/meminfo</code>, otherwise <code>-1</code>. Note that this metric is not
      * container-aware (does not take cgroups into account) and may report available memory of the
      * host.
@@ -118,10 +121,20 @@ class MemoryUtil {
      */
     private static long getAvailableMemorySizeLinux() {
         try {
-            String memAvailableLine = Files.readAllLines(Paths.get("/proc/meminfo")).stream().filter(l -> l.startsWith("MemAvailable")).findFirst().orElse("");
-            Matcher m = Pattern.compile("^MemAvailable:\\s+(\\d+) kB").matcher(memAvailableLine);
-            if (m.matches()) {
-                return Long.parseLong(m.group(1)) * KiB_TO_BYTES;
+            List<String> memInfo = Files.readAllLines(Paths.get("/proc/meminfo"));
+            String swapTotalLine = memInfo.stream().filter(l -> l.startsWith("SwapTotal")).findFirst().orElse("");
+            Matcher swapTotalMatcher = Pattern.compile("^SwapTotal:\\s+(\\d+) kB").matcher(swapTotalLine);
+            long swapTotalKiB = swapTotalMatcher.matches() ? Long.valueOf(swapTotalMatcher.group(1)) : 0;
+            String memAvailableLine = memInfo.stream().filter(l -> l.startsWith("MemAvailable")).findFirst().orElse("");
+            Matcher memAvailableMatcher = Pattern.compile("^MemAvailable:\\s+(\\d+) kB").matcher(memAvailableLine);
+            if (memAvailableMatcher.matches()) {
+                long memAvailableKiB = Long.parseLong(memAvailableMatcher.group(1));
+                /*
+                 * Based on total swap, set headroom somewhere between zero (no swap) and
+                 * MAX_HEADROOM_RATIO of available memory (total swap exceeds available memory).
+                 */
+                long reasonableHeadroomKiB = (long) (Math.min(swapTotalKiB, memAvailableKiB) * MAX_HEADROOM_RATIO);
+                return (memAvailableKiB + reasonableHeadroomKiB) * KiB_TO_BYTES;
             }
         } catch (Exception e) {
         }
@@ -129,7 +142,7 @@ class MemoryUtil {
     }
 
     /**
-     * Returns the total amount of available memory in bytes on Darwin based on
+     * Returns the total amount of available memory plus headroom in bytes on Darwin based on
      * <code>vm_stat</code>, otherwise <code>-1</code>.
      *
      * @see <a href=
@@ -174,7 +187,9 @@ class MemoryUtil {
                     return -1;
                 }
                 assert freePages > 0 && inactivePages > 0 && pageSize > 0;
-                return (freePages + inactivePages) * pageSize;
+                long availableMemoryBytes = (freePages + inactivePages) * pageSize;
+                long reasonableHeadroomBytes = (long) (availableMemoryBytes * MAX_HEADROOM_RATIO);
+                return availableMemoryBytes + reasonableHeadroomBytes;
             } finally {
                 p.waitFor();
             }
@@ -184,8 +199,8 @@ class MemoryUtil {
     }
 
     /**
-     * Returns the total amount of available memory in bytes on Windows based on <code>wmic</code>,
-     * otherwise <code>-1</code>.
+     * Returns the total amount of available memory plus headroom in bytes on Windows based on
+     * <code>wmic</code>, otherwise <code>-1</code>.
      *
      * @see <a href=
      *      "https://learn.microsoft.com/en-us/windows/win32/cimwin32prov/win32-operatingsystem">Win32_OperatingSystem
@@ -209,7 +224,9 @@ class MemoryUtil {
                 }
                 Matcher m = Pattern.compile("^(\\d+)\\s+").matcher(line3);
                 if (m.matches()) {
-                    return Long.parseLong(m.group(1)) * KiB_TO_BYTES;
+                    long availableMemoryBytes = Long.parseLong(m.group(1)) * KiB_TO_BYTES;
+                    long reasonableHeadroomBytes = (long) (availableMemoryBytes * MAX_HEADROOM_RATIO);
+                    return availableMemoryBytes + reasonableHeadroomBytes;
                 }
             }
             p.waitFor();
