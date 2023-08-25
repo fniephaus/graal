@@ -133,12 +133,8 @@ class MemoryUtil {
         if (containerMetrics != null) {
             long memoryLimit = containerMetrics.getMemoryLimit();
             if (memoryLimit >= 0) {
+                /* Do not use any headroom to avoid OutOfMemoryErrors. */
                 return (long) (memoryLimit * MAX_ALLOWED_CONTAINER_MEMORY_RATIO);
-            } else {
-                /*
-                 * Use fallback based on container-aware OperatingSystemMXBean.getTotalMemorySize().
-                 */
-                return -1;
             }
         }
 
