@@ -85,12 +85,14 @@ class MemoryUtil {
         var osBean = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
         long totalMemorySize = osBean.getTotalMemorySize();
         long maxAllowedTotalMemorySize = (long) (totalMemorySize * MAX_ALLOWED_TOTAL_MEMORY_RATIO);
+        System.out.println("Max allowed total memory size: " + maxAllowedTotalMemorySize);
         long reasonableMaxMemorySize = -1;
         reasonableMaxMemorySize = switch (OS.getCurrent()) {
             case LINUX -> getAvailableMemorySizeLinux();
             case DARWIN -> getAvailableMemorySizeDarwin();
             case WINDOWS -> getAvailableMemorySizeWindows();
         };
+        System.out.println("Reasonable max memory size: " + reasonableMaxMemorySize);
         if (reasonableMaxMemorySize < 0 || reasonableMaxMemorySize > maxAllowedTotalMemorySize) {
             /*
              * The amount of available memory was not at all or incorrectly detected. Fall back to a
@@ -107,6 +109,7 @@ class MemoryUtil {
                             null, ExitStatus.OUT_OF_MEMORY.getValue());
         }
         reasonableMaxMemorySize = Math.min(reasonableMaxMemorySize, MAX_HEAP_BYTES);
+        System.out.println("Final max memory size: " + reasonableMaxMemorySize);
         return (double) reasonableMaxMemorySize / totalMemorySize * 100;
     }
 
@@ -134,6 +137,7 @@ class MemoryUtil {
                  * MAX_HEADROOM_RATIO of available memory (total swap exceeds available memory).
                  */
                 long reasonableHeadroomKiB = (long) (Math.min(swapTotalKiB, memAvailableKiB) * MAX_HEADROOM_RATIO);
+                System.out.println("Reasonable headroom size: " + (reasonableHeadroomKiB * KiB_TO_BYTES));
                 return (memAvailableKiB + reasonableHeadroomKiB) * KiB_TO_BYTES;
             }
         } catch (Exception e) {
